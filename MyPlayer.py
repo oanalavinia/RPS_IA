@@ -1,9 +1,10 @@
 from RPS import RPS as RPS
 
+
 class MyPlayer(RPS):
     def __init__(self, name):
         RPS.__init__(self)
-        self.frequencyTwo = [0]*9
+        self.frequencyTwo = [0] * 9
         self.name = name
 
     def move(self):

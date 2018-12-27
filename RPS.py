@@ -10,7 +10,3 @@ class RPS:
 
     def getScore(self):
         return self.score
-
-    def prettyPrint(self):
-        print(self.moves)
-        print(self.score)

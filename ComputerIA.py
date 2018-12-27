@@ -2,11 +2,25 @@ from RPS import RPS as RPS
 import random
 import switchers
 
+
+def get_opponent(move):
+    return switchers.getOpposite(move)
+
+
+def get_max_dictionary(dictionary):
+    maxim = 0
+    for value in dictionary.values():
+        if value > maxim:
+            maxim = value
+    for move, number in dictionary.items():
+        if number == maxim:
+            return move
+
+
 class ComputerIA(RPS):
-    def __init__(self, MyPlayer):
+    def __init__(self):
         RPS.__init__(self)
-        self.MyPlayer = MyPlayer
-        self.frequency = [0]*9
+        self.opp_moves = []
         self.dict_rock = {
             0: 0,
             1: 0,
@@ -23,25 +37,15 @@ class ComputerIA(RPS):
             2: 0
         }
 
-    def getMostFrequent(self):
-        maxim = max(self.MyPlayer.frequencyTwo)
-        mostFrequent = [i for i, j in enumerate(self.MyPlayer.frequencyTwo) if j == maxim]
-        if len(mostFrequent)>1:
-            return random.choice(mostFrequent)
-        return mostFrequent[0]
+    def get_move(self):
+        if len(self.opp_moves) > 0:
+            return self.opp_moves[-1]
 
-    def getOpponent(self, move):
-        return switchers.getOpposite(move)
+    def get_last_move(self):
+        if len(self.opp_moves) > 1:
+            return self.opp_moves[-2]
 
-    def getMove(self):
-        if len(self.MyPlayer.moves) > 0:
-            return self.MyPlayer.moves[-1]
-
-    def getLastMove(self):
-        if len(self.MyPlayer.moves) > 1:
-            return self.MyPlayer.moves[-2]
-
-    def setFrequencyDict(self, move, last_move):
+    def set_frequency(self, move, last_move):
         if last_move is None or move is None:
             return
         move = int(move)
@@ -53,31 +57,22 @@ class ComputerIA(RPS):
         elif last_move == 2:
             self.dict_scissors[move] = self.dict_scissors[move] + 1
 
-    def getNextMove(self, move):
+    def get_next_move(self, move):
         if move is None:
             return
         if int(move) == 0:
-            return self.getMaxOfDictionaty(self.dict_rock)
+            return get_max_dictionary(self.dict_rock)
         elif int(move) == 1:
-            return self.getMaxOfDictionaty(self.dict_paper)
+            return get_max_dictionary(self.dict_paper)
         elif int(move) == 2:
-            return self.getMaxOfDictionaty(self.dict_scissors)
-
-    def getMaxOfDictionaty(self, dictionary):
-        max = 0
-        for value in dictionary.values():
-            if value > max:
-                max = value
-        for move, number in dictionary.items():
-            if number == max:
-                return move
+            return get_max_dictionary(self.dict_scissors)
 
     def move(self):
-        move = self.getMove()
-        last_move = self.getLastMove()
-        self.setFrequencyDict(move, last_move)
-        number = self.getNextMove(move)
+        move = self.get_move()
+        last_move = self.get_last_move()
+        self.set_frequency(move, last_move)
+        number = self.get_next_move(move)
         if number is None:
-            return random.choice([0,1,2])
+            return random.choice([0, 1, 2])
         else:
-            return self.getOpponent(number)
+            return get_opponent(number)
