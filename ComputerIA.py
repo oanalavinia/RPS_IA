@@ -1,6 +1,7 @@
 from RPS import RPS as RPS
 import random
 import switchers
+import os
 
 
 def get_opponent(move):
@@ -17,10 +18,27 @@ def get_max_dictionary(dictionary):
             return move
 
 
+def get_content_by_file_name(file_name):
+    path = os.path.join(os.getcwd(), 'dict')
+    file_path = os.path.join(path, file_name+'.txt')
+    if os.path.exists(file_path):
+        f = open(file_path, 'r')
+        content = f.read()
+        f.close()
+    else:
+        new_file_path = os.path.join(path, file_name+'.txt')
+        f = open(new_file_path, 'w')
+        content = "0 0 0 0 0 0 0 0 0"
+        # g.close()
+        f.close()
+    return content
+
+
 class ComputerIA(RPS):
     def __init__(self):
         RPS.__init__(self)
         self.opp_moves = []
+        self.player = 'all'
         self.dict_rock = {
             0: 0,
             1: 0,
@@ -36,6 +54,26 @@ class ComputerIA(RPS):
             1: 0,
             2: 0
         }
+
+    def get_dictionaries(self):
+        content = get_content_by_file_name(self.player)
+        allValues = content.split(' ')
+        for i in range(3):
+            self.dict_rock[i] = int(allValues[i])
+            self.dict_paper[i] = int(allValues[i+3])
+            self.dict_scissors[i] = int(allValues[i+3])
+
+    def set_dictionaries(self):
+        path = os.path.join(os.getcwd(), 'dict')
+        file_path = os.path.join(path, self.player + '.txt')
+        with open(file_path, 'w') as f:
+            for i in self.dict_rock:
+                f.write(str(self.dict_rock[i]) + ' ')
+            for i in self.dict_paper:
+                f.write(str(self.dict_paper[i]) + ' ')
+            for i in self.dict_scissors:
+                f.write(str(self.dict_scissors[i]) + ' ')
+
 
     def get_move(self):
         if len(self.opp_moves) > 0:

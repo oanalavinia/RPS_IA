@@ -16,25 +16,19 @@ def get_winner(computer, player):
     else:
         return "Player"
 
+def pretty_print(computer_choise, player_choise):
+    print("computer: ", switchers.get_move(computerChoice))
+    print("player: ", switchers.get_move(playerChoice))
+    print("score computer vs player:", computerIA.score, " ", player2.score)
 
-# computerRandom = ComputerRandom.ComputerRandom()
-# player = MyPlayerRandom.MyPlayerRandom()
-#
-# for i in range(16):
-#     computerChoice = computerRandom.move()
-#     playerChoice = player.move()
-#     winner = game(computerChoice, playerChoice)
-#     if winner == 1:
-#         computerRandom.scoreUp()
-#     elif winner == 2:
-#         player.scoreUp()
 
-# print(getWinner(computerRandom, player))
-# print(player.getScore())
-# print(computerRandom.getScore())
 
 player2 = MyPlayer.MyPlayer("Oana")
 computerIA = ComputerIA.ComputerIA()
+
+name = input("What's your name?")
+computerIA.player = name
+computerIA.get_dictionaries()
 
 for i in range(16):
     print("\n GAME", i)
@@ -46,9 +40,9 @@ for i in range(16):
         computerIA.scoreUp()
     elif winner == 2:
         player2.scoreUp()
-    print("computer: ", computerChoice)
-    print("score:", computerIA.score, " ", player2.score)
+    pretty_print(computerChoice, playerChoice)
+    if computerIA.score == 8 or player2.score == 8:
+        break
 
+computerIA.set_dictionaries()
 print(get_winner(computerIA, player2))
-
-

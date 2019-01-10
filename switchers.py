@@ -13,6 +13,7 @@ def switch_frequency(number1, number2):
     number = int(str(number1) + str(number2))
     return switcher.get(number)
 
+
 # R-0 P-1 S-2
 def switch_winner(number1, number2):
     switcher = {
@@ -29,6 +30,7 @@ def switch_winner(number1, number2):
     number = int(str(number1) + str(number2))
     return switcher.get(number)
 
+
 # R-0 P-1 S-2
 def getOpposite(number):
     switcher = {
@@ -37,3 +39,13 @@ def getOpposite(number):
         2: "0"
     }
     return switcher.get(number)
+
+
+def get_move(number):
+    number = int(number)
+    if number == 0:
+        return 'rock'
+    elif number == 1:
+        return "paper"
+    elif number == 2:
+        return "scissors"

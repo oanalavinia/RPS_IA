@@ -14,11 +14,8 @@ class MyPlayerRandom(RPS):
         return self.frequencyTwo[position]
 
     def move(self):
-        number = random.choice(self.choices)
+        number = input("Rock(0), Paper(1) or Scrissors(2)? ")
         self.moves.append(number)
-        self.frequency[number] = self.frequency[number]+1
-        if (len(self.moves)>1):
-            self.setFrequencyTwo(number, self.moves[-2])
         return number
 
     def resolve(self):
