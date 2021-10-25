@@ -7,7 +7,7 @@ def game(number1, number2):
     winner = int(switchers.switch_winner(number1, number2))
     return winner
 
-def test():
+def test2():
     return "test"
 
 def get_winner(computer, player):
